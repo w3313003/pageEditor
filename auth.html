@@ -1,0 +1,1437 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>商户认证</title>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no"/>
+    <!-- <script src='https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js'></script> -->
+	<link href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
+	<style type="text/css">
+		body, input, textarea, select, button { font-size: 16px;  font-family: -apple-system-font, Helvetica Neue, sans-serifHelvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;  }
+		body { max-width: 640px; margin: 0 auto; background: #F8F8F8;}
+		h1, h2, h3, h4, h5, h6 { font-weight: normal; }
+		a, button, input, textarea { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+		img { vertical-align: top; }
+        .hide { display: none;  }
+        .weui-btn-area { margin-bottom: 20px; }
+        .panel { position: relative; overflow: hidden; }
+        .panel + .panel { margin-top: 20px; }
+        .panel .panel-header { background: #FFF; position: relative; padding: 0 15px; color: #666; font-size: 18px; height: 44px; line-height: 44px; }
+        .panel .panel-header span { padding-left: 10px; display: inline-block; height: 24px; line-height: 24px; border-left: 3px solid #1AAD19; }
+        .panel:before,
+        .panel .panel-header:before { content: " "; position: absolute; left: 0; bottom: 0; right: 0; height: 1px; border-bottom: 1px solid #D9D9D9; color: #D9D9D9; -webkit-transform-origin: 0 100%; transform-origin: 0 100%; -webkit-transform: scaleY(0.5); transform: scaleY(0.5); }
+        .panel .panel-header:after { content: " "; display: inline-block; height: 10px; width: 10px; border-width: 2px 2px 0 0; border-color: #C8C8CD; border-style: solid; -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0); transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0); position: relative; top: -2px; position: absolute; top: 50%; right: 15px; margin-top: -7px; }
+        .panel:before { bottom: auto; top: -1px; z-index: 1; }
+        .panel.open .panel-header:after { -webkit-transition: -webkit-transform .3s; transition: transform .3s; -webkit-transform: matrix(-0.71,0.71,-0.71,-0.71,0,0); transform: matrix(-0.71,0.71,-0.71,-0.71,0,0); }
+        .panel .panel-body { height: 0; -webkit-transition: height .5s; transition: height .5s; }
+        .panel.open .panel-body { height: auto; }
+        .panel .panel-body .weui-cells:first-child { margin: 0; }
+        .panel .panel-body .weui-cells:first-child:before { display: none; }
+        .panel .panel-body .required { position: relative; }
+        .panel .panel-body .required:before { content: "*"; display: inline-block; padding-right: 5px; color: red; }
+        .panel .panel-body .weui-label { width: 120px; color: #1f2d3d; font-size: 13px; }
+        .panel .panel-body .weui-input { font-size: 14px; color: #1f2d3d; }
+        .panel .panel-body input[disabled] { -webkit-text-fill-color: rgb(117, 117, 117); opacity: .6; }
+		.panel .weui-cells_radio .weui-cell__bd { font-size: 14px; color: #1f2d3d; }
+		.panel .upload-thumb { width: 95%; height: auto; }
+		.panel .weui-uploader__bd { position: relative; margin: 0; }
+		.panel .weui-uploader__input-box { border: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; width: 100%; height: 100%; margin: 0; }
+		.panel .weui-uploader__input-box:before,
+		.panel .weui-uploader__input-box:after { display: none; }
+        .panel .weui-uploader__input[disabled] { opacity: 0 !important; }
+        .notice { width: 100%; padding: 8px 15px; margin: 0; box-sizing: border-box; position: relative; background-color: #fff; overflow: hidden; color: #fff; opacity: 1; display: table; transition: opacity .2s; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+        .notice-success { background-color: #13ce66; }
+        .notice-info { background-color: #50bfff; }
+        .notice-warning { background-color: #f7ba2a; }
+        .notice-error {  background-color: #ff4949; }
+        .notice-inner {  display: table-cell; padding: 0 8px; }
+        .notice h3 { font-weight: 700;  font-size: 13px; line-height: 18px;  }
+        .notice p { color: #fff;  font-size: 12px; margin: 5px 0 0; line-height: 1.4; }
+        .panel .upload-form { overflow: hidden; }
+        .panel .upload-form .weui-cell { display: block; float: left; width: 50%; box-sizing: border-box; }
+        .panel .upload-form .weui-cell:before { display: none; }
+        .panel .upload-form .weui-cell .weui-cell__hd { display: block; text-align: center; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; margin-top: 5px; }
+        .panel .upload-form .weui-cell .weui-uploader__bd { text-align: center; }
+        .panel .upload-form .weui-cell .weui-uploader__bd img { height: 120px; max-height: 120px; }
+        .panel .upload-form .weui-cell .weui-label { display: block; width: auto; margin: 0; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;  }
+        .wx_appid:before, .bank_no:before { display: none; }
+        .dialog-notice .weui-dialog__bd { line-height: 1.4; text-align: left; }
+        .dialog-notice .weui-dialog__bd p { position: relative; padding: 5px 0; overflow: hidden; padding-left: 90px; min-height: 24px; }
+        .dialog-notice .weui-dialog__bd p.tips { padding-left: 0; font-size: 14px; color: red; }
+        .dialog-notice .weui-dialog__bd span { position: absolute; left: 0; top: 5px; width: 90px; }
+        .form_btn { z-index: 10; color: #666; position: absolute; top: 50%; margin-top: -12px; right: 15px; padding: 3px 10px; line-height: 1.4; }
+        .category_id_picker .weui-picker__bd .weui-picker__group:first-child { width: 120px; -webkit-box-flex: none; -webkit-flex: none; flex: none; }
+	</style>
+</head>
+<body>
+    <div class="notice notice-warning" id="notice">
+        <div class="notice-inner">
+            <h3 id="notice-title">未认证</h3>
+            <p id="notice-desc">您当前还没有进行认证，请进行认证</p>
+        </div>
+    </div>
+
+    <main id="form">
+        <form>
+            <div class="weui-cells__title">商户认证</div>
+            <section class="panel open">
+                <div class="panel-header"><span>商户信息</span></div>
+                <div class="panel-body">
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">法人姓名:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="realname" placeholder="请填写法人姓名" emptytips="请填写您的法人姓名">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">身份证号码:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="id_no" pattern="REG_IDNUM" maxlength="18" placeholder="请填写你的身份证号码" emptytips="请填写身份证号码" notmatchtips="请填写正确的身份证号码">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">手机号码:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="mobile" pattern="REG_MOBILE" maxlength="18" placeholder="请填写你的手机号码" emptytips="请填写你的手机号码" notmatchtips="请填写正确的手机号码">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">商户简称:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="shortname" placeholder="请填写您的商户简称 (4-15字)" emptytips="请填写您的商户简称 (4-15字)">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required" style="width: 120px;">商户类型:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="type_wrap">
+                                <input class="weui-input" id="type" type="text" required="" disabled="" placeholder="请选择商户类型" emptytips="请选择您的商户类型">
+                                <input class="weui-input" type="hidden" readonly="" name="type" value="">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">请选择地址:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="address_wrap">
+                                <input class="weui-input" id="address" type="text" required="" disabled="" placeholder="请选择地址" emptytips="请选择您的地址">
+                                <input class="weui-input" type="hidden" readonly="" name="gb_province_no" value="">
+                                <input class="weui-input" type="hidden" readonly="" name="gb_city_no" value="">
+                                <input class="weui-input" type="hidden" readonly="" name="gb_district_no" value="">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">详细地址:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="address" required="" placeholder="请填写详细地址" emptytips="请填写详细地址">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required" style="width: 120px;">经营类别:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="category_wrap">
+                                <input class="weui-input" id="category" type="text" required="" disabled="" placeholder="请选择经营类别" emptytips="请选择您的经营类别">
+                                <input class="weui-input" type="hidden" readonly="" name="category" value="">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">微信号:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="wechat_id" placeholder="请填写您的微信号" emptytips="请填写您的微信号">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">营业执照编号:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="license_no" placeholder="请填写营业执照编号" emptytips="请填写营业执照编号">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">营业执照注册名称:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="name" placeholder="请填写您的营业执照注册名称" emptytips="请填写您的营业执照注册名称">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">营业执照注册地址:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="license_address" required="" placeholder="请填写营业执照注册地址" emptytips="请填写您的营业执照注册地址">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">注册号开始日期:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="license_start_date_wrap">
+                                <input class="weui-input" type="text" required="" id="license_start_date" disabled="" placeholder="请填写注册号开始日期" emptytips="请填写注册号开始日期">
+                                <input class="weui-input" type="hidden" name="license_start_date" readonly="" value="">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">注册号结束日期:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="license_end_date_wrap">
+                                <input class="weui-input" type="text"  id="license_end_date" required="" disabled="" placeholder="请填写注册号结束日期" emptytips="请填写注册号结束日期">
+                                <input class="weui-input" type="hidden" name="license_end_date" readonly="" value="">
+                                <a class="weui-btn weui-btn_mini weui-btn_default form_btn" id="set-end-date">永久</a>
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header"><span>帐户信息</span></div>
+                <div class="panel-body">
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cells__title">请选择结算账户</div>
+                        <div class="weui-cells weui-cells_radio" id="account_type">
+                            <label class="weui-cell weui-check__label" for="account_type_0">
+                                <div class="weui-cell__bd">
+                                    <p>个人</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input type="radio" class="weui-check" id="account_type_0" name="account_type" value="0" checked="checked">
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+                            <label class="weui-cell weui-check__label" for="account_type_1">
+                                <div class="weui-cell__bd">
+                                    <p>公司</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input type="radio" name="account_type" class="weui-check" value="1" id="account_type_1">
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">开户银行城市:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="account_city_wrap">
+                                <input class="weui-input" id="account_city" type="text" required="" disabled="" placeholder="请选择开户银行所在城市" emptytips="请选择开户银行所在城市">
+                                <input class="weui-input" type="hidden" readonly="" name="account_city" value="">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell bank_no">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">开户银行:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="bank_id_wrap">
+                                <input class="weui-input" id="bank_id" required="" disabled="" placeholder="请选择您的开户银行" emptytips="请选择开户银行">
+                                <input class="weui-input" type="hidden" name="bank_id" readonly="" value="">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell bank_no">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">开户支行:</label>
+                            </div>
+                            <div class="weui-cell__bd" id="bank_no_wrap">
+                                <input class="weui-input" id="bank_no" required="" disabled="" placeholder="请选择您的开户支行" emptytips="请选择开户支行">
+                                <input class="weui-input" type="hidden" name="bank_no" readonly="" value="">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">开户名称:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="account_name" placeholder="请填写开户名称" emptytips="请填写您的开户名称">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">银行卡号:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="bankcard_no" placeholder="请填写您的银行卡号" emptytips="请填写您的银行卡号">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label required">银行预留手机号:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" required="" name="account_mobile" pattern="REG_MOBILE" maxlength="18" placeholder="请填写您的银行预留手机号" emptytips="请填写您的银行预留手机号" notmatchtips="请填写正确的手机号码">
+                                <a class="weui-btn weui-btn_mini weui-btn_default form_btn" id="set-account-mobile">同上</a>
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header"><span>其它信息</span></div>
+                <div class="panel-body">
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cells__title">公众号主体名称 (关注公众号需要)</div>
+                        <div class="weui-cells weui-cells_radio" id="self_appid_wrap">
+                            <label class="weui-cell weui-check__label" for="self_appid_2">
+                                <div class="weui-cell__bd">
+                                    <p>无公众号</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input type="radio" class="weui-check" id="self_appid_2" name="self_appid" value="2" checked="checked">
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+                            <label class="weui-cell weui-check__label" for="self_appid_1">
+                                <div class="weui-cell__bd">
+                                    <p>有公众号</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <input type="radio" name="self_appid" class="weui-check" value="1" id="self_appid_1">
+                                    <span class="weui-icon-checked"></span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="weui-cell wx_appid" style="display: none;">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">公众号 AppId:</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="text" name="wx_appid" placeholder="公众号主体需与营业执照主体一致" emptytips="请填写您的公众号 AppId">
+                            </div>
+                            <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header"><span>照片信息</span></div>
+                <div class="panel-body">
+					<div class="weui-cells weui-cells_form upload-form">
+					     <div class="weui-cell" id="uploader-shop_pic">
+					         <div class="weui-cell__bd">
+					             <div class="weui-uploader">
+					                 <div class="weui-uploader__bd">
+										 <img src="https://img1.vyicoo.cn/app/icon/extra_pic.png" id="shop_pic-img" class="upload-thumb" alt="">
+										 <input type="hidden" name="shop_pic" value="">
+					                     <div class="weui-uploader__input-box">
+					                         <input class="weui-uploader__input" type="file" accept="image/*" />
+					                     </div>
+					                 </div>
+					             </div>
+					         </div>
+					         <div class="weui-cell__hd">
+                                 <label class="weui-label required">门头照片</label>
+                             </div>
+					     </div>
+
+						 <div class="weui-cell" id="uploader-license_pic">
+					         <div class="weui-cell__bd">
+					             <div class="weui-uploader">
+					                 <div class="weui-uploader__bd">
+										 <img src="https://img1.vyicoo.cn/app/icon/extra_pic.png" id="license_pic-img" class="upload-thumb" alt="">
+										 <input type="hidden" name="license_pic" value="">
+					                     <div class="weui-uploader__input-box">
+					                         <input class="weui-uploader__input" type="file" accept="image/*" />
+					                     </div>
+					                 </div>
+					             </div>
+					         </div>
+					         <div class="weui-cell__hd">
+                                 <label class="weui-label required">营业执照照片</label>
+                             </div>
+					     </div>
+
+						 <div class="weui-cell" id="uploader-id_front_pic">
+					         <div class="weui-cell__bd">
+					             <div class="weui-uploader">
+					                 <div class="weui-uploader__bd">
+										 <img src="https://img1.vyicoo.cn/app/icon/extra_pic.png" id="id_front_pic-img" class="upload-thumb" alt="">
+										 <input type="hidden" name="id_front_pic" value="">
+					                     <div class="weui-uploader__input-box">
+					                         <input class="weui-uploader__input" type="file" accept="image/*" />
+					                     </div>
+					                 </div>
+					             </div>
+					         </div>
+					         <div class="weui-cell__hd">
+                                 <label class="weui-label required">法人身份证正面照片</label>
+                             </div>
+                             </div>
+                             <div class="weui-cell" id="uploader-id_back_pic">
+                                 <div class="weui-cell__bd">
+                                     <div class="weui-uploader">
+                                         <div class="weui-uploader__bd">
+                                            <img src="https://img1.vyicoo.cn/app/icon/extra_pic.png" id="id_back_pic-img" class="upload-thumb" alt="">
+                                            <input type="hidden" name="id_back_pic" value="">
+                                            <div class="weui-uploader__input-box">
+                                                <input class="weui-uploader__input" type="file" accept="image/*" />
+                                            </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="weui-cell__hd">
+                                 <label class="weui-label required">法人身份证反面照片</label>
+                             </div>
+					     </div>
+
+						 <div class="weui-cell" id="uploader-bankcard_pic">
+					         <div class="weui-cell__bd">
+					             <div class="weui-uploader">
+					                 <div class="weui-uploader__bd">
+										 <img src="https://img1.vyicoo.cn/app/icon/extra_pic.png" id="bankcard_pic-img" class="upload-thumb" alt="">
+										 <input type="hidden" name="bankcard_pic" value="">
+					                     <div class="weui-uploader__input-box">
+					                         <input class="weui-uploader__input" type="file" accept="image/*" />
+					                     </div>
+					                 </div>
+					             </div>
+					         </div>
+					         <div class="weui-cell__hd">
+                                 <label class="weui-label required">银行卡正面</label>
+                             </div>
+					     </div>
+
+                         <div class="weui-cell" id="uploader-extra_pic1">
+                             <div class="weui-cell__bd">
+                                 <div class="weui-uploader">
+                                     <div class="weui-uploader__bd">
+                                         <img src="https://img1.vyicoo.cn/app/icon/extra_pic.png" id="extra_pic1-img" class="upload-thumb" alt="">
+                                         <input type="hidden" name="extra_pic1" value="">
+                                         <div class="weui-uploader__input-box">
+                                             <input class="weui-uploader__input" type="file" accept="image/*" />
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="weui-cell__hd">
+                                 <label class="weui-label required">经营场所内照片</label>
+                             </div>
+                         </div>
+
+                         <div class="weui-cell" id="uploader-extra_pic2">
+                             <div class="weui-cell__bd">
+                                 <div class="weui-uploader">
+                                     <div class="weui-uploader__bd">
+                                         <img src="https://img1.vyicoo.cn/app/icon/extra_pic.png" id="extra_pic2-img" class="upload-thumb" alt="">
+                                         <input type="hidden" name="extra_pic2" value="">
+                                         <div class="weui-uploader__input-box">
+                                             <input class="weui-uploader__input" type="file" accept="image/*" />
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="weui-cell__hd">
+                                 <label class="weui-label required">收银台招牌照片</label>
+                             </div>
+                         </div>
+
+                         
+					 </div>
+                </div>
+            </section>
+            <section class="weui-btn-area">
+                <a id="submit" href="javascript:" class="weui-btn weui-btn_primary">提交</a>
+            </section>
+        </form>
+    </main>
+
+	<script type="text/javascript" src="https://img1.vyicoo.cn/static/js/zepto.min.js"></script>
+	<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.2/weui.min.js"></script>
+    <script type="text/javascript" src="https://img1.vyicoo.cn/static/js/weui.city.min.js?ver=1505213937328"></script>
+    <script tyep="text/javascript">
+    var __CATEGORY__ = [{"value":"103","label":"企业-公益-公益"},{"value":"104","label":"企业-网络虚拟服务-门户/资讯/论坛"},{"value":"111","label":"企业-其他-其他行业"},{"value":"112","label":"企业-金融-众筹"},{"value":"116","label":"个体工商户-生活/家居-户外/运动/健身器材/安防"},{"value":"123","label":"个体工商户-生活/家居-计生用品"},{"value":"129","label":"个体工商户-生活/家居-母婴用品/儿童玩具"},{"value":"13","label":"企业-生活/家居-计生用品"},{"value":"143","label":"个体工商户-生活/咨询服务-咨询/法律咨询/金融咨询等"},{"value":"147","label":"个体工商户-教育/培训-教育/培训/考试缴费/学费"},{"value":"148","label":"个体工商户-娱乐/健身服务-美容/健身类会所"},{"value":"149","label":"个体工商户-娱乐/健身服务-游艺厅/KTV/网吧"},{"value":"153","label":"个体工商户-餐饮/食品-餐饮"},{"value":"155","label":"个体工商户-通信-话费通讯"},{"value":"157","label":"个体工商户-生活/咨询服务-职业社交/婚介/交友"},{"value":"158","label":"个体工商户-其他-其他行业"},{"value":"164","label":"事业单位-教育/培训-公立院校"},{"value":"165","label":"事业单位-其他生活缴费-水电煤缴费/交通罚款等生活缴费"},{"value":"167","label":"事业单位-其他生活缴费-事业单位"},{"value":"170","label":"事业单位-其他生活缴费-物业管理费"},{"value":"172","label":"事业单位-其他生活缴费-其他生活缴费"},{"value":"176","label":"事业单位-医疗-公立医院"},{"value":"177","label":"事业单位-医疗-挂号平台"},{"value":"19","label":"企业-生活/家居-母婴用品/儿童玩具"},{"value":"2","label":"企业-电商/团购-团购"},{"value":"203","label":"企业-电商/团购-线上商超"},{"value":"204","label":"企业-线下零售-超市"},{"value":"205","label":"企业-线下零售-便利店"},{"value":"206","label":"企业-线下零售-自动贩卖机"},{"value":"207","label":"企业-线下零售-百货"},{"value":"208","label":"企业-线下零售-其他综合零售"},{"value":"209","label":"个体工商户-线下零售-便利店"},{"value":"210","label":"个体工商户-线下零售-其他综合零售"},{"value":"23","label":"企业-票务/旅游-旅行社"},{"value":"230","label":"个体工商户-医疗-私立/民营医院/诊所"},{"value":"24","label":"企业-票务/旅游-旅游服务平台"},{"value":"242","label":"个体工商户-金融-财经资讯"},{"value":"259","label":"企业-交通运输服务类-加油"},{"value":"266","label":"企业-生活/家居-家装建材/家居家纺"},{"value":"267","label":"企业-生活/家居-美妆/护肤"},{"value":"268","label":"企业-生活/家居-鲜花/盆栽/室内装饰品"},{"value":"269","label":"企业-生活/家居-交通工具/配件/改装"},{"value":"270","label":"企业-餐饮/食品-食品"},{"value":"271","label":"企业-生活/家居-服饰/箱包/饰品"},{"value":"272","label":"企业-生活/家居-钟表/眼镜"},{"value":"273","label":"企业-生活/咨询服务-婚庆/摄影"},{"value":"274","label":"企业-票务/旅游-机票/机票代理"},{"value":"275","label":"企业-票务/旅游-旅馆/酒店/度假区"},{"value":"276","label":"企业-网络虚拟服务-在线图书/视频/音乐"},{"value":"277","label":"企业-网络虚拟服务-软件/建站/技术开发"},{"value":"278","label":"企业-网络虚拟服务-网络推广/网络广告"},{"value":"279","label":"企业-网络虚拟服务-游戏"},{"value":"280","label":"企业-娱乐/健身服务-俱乐部/休闲会所"},{"value":"281","label":"企业-票务/旅游-娱乐票务"},{"value":"282","label":"企业-医疗-保健信息咨询平台"},{"value":"283","label":"企业-票务/旅游-交通票务"},{"value":"284","label":"企业-生活/家居-宠物/宠物食品/饲料"},{"value":"285","label":"企业-收藏/拍卖-文物经营/文物复制品销售"},{"value":"287","label":"企业-生活缴费-停车缴费"},{"value":"288","label":"企业-生活缴费-城市交通/高速收费"},{"value":"289","label":"企业-生活/咨询服务-装饰/设计"},{"value":"290","label":"事业单位-其他生活缴费-停车缴费"},{"value":"291","label":"事业单位-其他生活缴费-城市交通/高速收费"},{"value":"292","label":"个体工商户-餐饮/食品-食品"},{"value":"293","label":"个体工商户-生活/家居-家装建材/家居家纺"},{"value":"294","label":"个体工商户-生活/家居-美妆/护肤"},{"value":"295","label":"个体工商户-生活/家居-鲜花/盆栽/室内装饰品"},{"value":"296","label":"个体工商户-生活/家居-交通工具/配件/改装"},{"value":"297","label":"个体工商户-生活/家居-服饰/箱包/饰品"},{"value":"298","label":"个体工商户-生活/家居-钟表/眼镜"},{"value":"299","label":"个体工商户-生活/咨询服务-婚庆/摄影"},{"value":"3","label":"企业-电商/团购-海淘"},{"value":"300","label":"个体工商户-娱乐/健身服务-俱乐部/休闲会所"},{"value":"301","label":"个体工商户-票务/旅游-旅馆/酒店/度假区"},{"value":"302","label":"个体工商户-网络虚拟服务-软件/建站/技术开发"},{"value":"303","label":"个体工商户-网络虚拟服务-网络推广/网络广告"},{"value":"304","label":"个体工商户-网络虚拟服务-游戏"},{"value":"305","label":"个体工商户-生活/家居-宠物/宠物食品/饲料"},{"value":"306","label":"个体工商户-生活/咨询服务-装饰/设计"},{"value":"307","label":"个体工商户-票务/旅游-娱乐票务"},{"value":"308","label":"个体工商户-票务/旅游-交通票务"},{"value":"309","label":"个体工商户-生活缴费-生活缴费"},{"value":"31","label":"企业-收藏/拍卖-非文物类收藏品"},{"value":"310","label":"企业-生活/家居-数码家电/办公设备"},{"value":"311","label":"企业-生活/咨询服务-家政/维修服务"},{"value":"312","label":"企业-生活/咨询服务-广告/会展/活动策划"},{"value":"313","label":"企业-票务/旅游-景区/宗教"},{"value":"314","label":"企业-医疗-保健器械/医疗器械/非处方药品"},{"value":"315","label":"企业-生活/家居-书籍/音像/文具/乐器"},{"value":"316","label":"企业-房地产-房地产"},{"value":"317","label":"企业-苗木/绿化-苗木种植/园林绿化"},{"value":"318","label":"企业-金融-保险业务"},{"value":"319","label":"个体工商户-生活/家居-数码家电/办公设备"},{"value":"320","label":"个体工商户-生活/咨询服务-家政/维修服务"},{"value":"321","label":"个体工商户-生活/咨询服务-广告/会展/活动策划"},{"value":"322","label":"个体工商户-医疗-保健器械/医疗器械/非处方药品"},{"value":"323","label":"个体工商户-生活/家居-书籍/音像/文具/乐器"},{"value":"324","label":"个体工商户-苗木/绿化-苗木种植/园林绿化"},{"value":"325","label":"企业-收藏/拍卖-拍卖/典当"},{"value":"40","label":"企业-苗木/绿化-化肥/农用药剂等"},{"value":"42","label":"企业-生活/咨询服务-咨询/法律咨询/金融咨询等"},{"value":"52","label":"企业-教育/培训-教育/培训/考试缴费/学费"},{"value":"53","label":"企业-教育/培训-私立院校"},{"value":"54","label":"企业-娱乐/健身服务-美容/健身类会所"},{"value":"56","label":"企业-娱乐/健身服务-游艺厅/KTV/网吧"},{"value":"57","label":"企业-生活缴费-水电煤缴费/交通罚款等生活缴费"},{"value":"58","label":"企业-生活缴费-有线电视缴费"},{"value":"6","label":"企业-生活/家居-户外/运动/健身器材/安防"},{"value":"60","label":"企业-生活缴费-物业管理费"},{"value":"62","label":"企业-生活缴费-其他生活缴费"},{"value":"66","label":"企业-医疗-私立/民营医院/诊所"},{"value":"67","label":"企业-医疗-挂号平台"},{"value":"70","label":"企业-交通运输服务类-物流/快递公司"},{"value":"75","label":"企业-交通运输服务类-港口经营港口理货"},{"value":"77","label":"企业-交通运输服务类-租车"},{"value":"80","label":"企业-通信-电信运营商"},{"value":"81","label":"企业-通信-宽带收费"},{"value":"9","label":"企业-生活/家居-黄金珠宝/钻石/玉石"},{"value":"90","label":"企业-餐饮/食品-餐饮"},{"value":"92","label":"企业-通信-话费通讯"},{"value":"93","label":"企业-生活/咨询服务-人才中介机构/招聘/猎头"},{"value":"94","label":"企业-生活/咨询服务-职业社交/婚介/交友"},{"value":"95","label":"企业-生活/咨询服务-网上生活服务平台"},{"value":"96","label":"企业-金融-财经资讯"},{"value":"97","label":"企业-金融-股票软件类"}];
+
+	(function ($) {
+        var data = {
+            city: __CITY__,
+            category: __CATEGORY__,
+            type: [
+                {value: 1, label: '企业'},
+                {value: 2, label: '个体工商户'},
+            ]
+        };
+
+        var format = function(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) {
+                month = '0' + month;
+            }
+
+            if (day.length < 2) {
+                day = '0' + day;
+            }
+
+            return [year, month, day].join('-');
+        };
+
+        var main = {
+            /**
+             * 获取地址栏 Query
+             * @return {[type]}        [description]
+             */
+            query: function() {
+                var i = 0,
+                    str = '',
+                    obj = {},
+                    location = window.location.href,
+                    splitUrl = location.split("?"),
+                    strUrl = (splitUrl.length > 1) ? splitUrl[1].split("&") : 0,
+                    len = strUrl.length;
+
+                for(; i < len; i++) {
+                    str = strUrl[i].split("=");
+                    obj[str[0]] = str[1];
+                }
+
+                return obj;
+            },
+
+            /**
+             * 获取城市名字
+             * @param  {[type]} val    [description]
+             * @param  {[type]} params [description]
+             * @return {[type]}        [description]
+             */
+            getCityName: function(city, val) {
+                var str = "";
+
+                if (!val || !val.length) {
+                    return str;
+                }
+
+                $.each(city, function(i, value) {
+                    if (value.value == val[0]) {
+                        str += value.label + ' ';
+                        $.each(value.children, function(i, second) {
+                            if (second.value == val[1]) {
+                                str += second.label + ' ';
+                                $.each(second.children, function(i, third) {
+                                    if (third.value == val[2]) {
+                                        str += third.label + ' ';
+                                        return false;
+                                    }
+                                });
+                                return false;
+                            }
+                        });
+                        return false;
+                    }
+                });
+
+                return str;
+            },
+
+            /**
+             * 获取 Select Name
+             * @param  {[type]} val    [description]
+             * @param  {[type]} params [description]
+             * @return {[type]}        [description]
+             */
+            getSelectName: function(data, val) {
+                var str = "";
+
+                if (!val || !val.length) {
+                    return str;
+                }
+
+                $.each(data, function(index, value) {
+                    if (value.value == val) {
+                        str = value.label;
+                        return false;
+                    }
+                });
+
+                return str;
+            },
+
+            /**
+             * 获取当前认证数据
+             * @return {[type]}        [description]
+             */
+            get: function(callback) {
+                var _this = this,
+                    $loading = weui.loading('加载中...');
+
+                var tmp = this.params;
+                var temp = {
+                    act: "get",
+                    token: ""
+                };
+                temp['token'] = this.params['token'];
+                $.get('', temp, function(data) {
+                    if (data.status === 0) {
+                        callback && callback.apply(_this, [data.data]);
+                    } else {
+                        weui.alert(data.msg);
+                    }
+                    $loading.hide();
+                }, 'json');
+
+            },
+
+            /**
+             * 获取银行列表
+             * @return {[type]}        [description]
+             */
+            getBank: function(callback) {
+                var _this = this;
+
+                $.get('https://b.vyicoo.com/common/bank', {}, function(data) {
+                    if (data.status === 0) {
+                        var arr = [];
+                        $.each(data.data || [], function (index, value) {
+                             arr.push({
+                                label: value.name,
+                                value: value.id
+                             });
+                        });
+                        _this.bankList = arr || [];
+                        callback && callback.apply(_this);
+                    } else {
+                        weui.alert(data.msg);
+                    }
+                }, 'json');
+
+                return this;
+            },
+
+            /**
+             * 获取银行支行列表
+             * @return {[type]}        [description]
+             */
+            getBankChild: function(callback) {
+                var _this = this,
+                    $loading = weui.loading('加载中...');
+
+                $.get('https://b.vyicoo.com/common/bank/'+ $('input[name="bank_id"]').val() +'/city/' + $('input[name="account_city"]').val(), {}, function(data) {
+                    if (data.status === 0) {
+                        var arr = [];
+                        $.each(data.data || [], function (index, value) {
+                            arr.push({
+                                label: value.name,
+                                value: value.id
+                            });
+                        });
+                        _this.bankListChild = arr || [];
+                        callback && callback.apply(_this);
+                    } else {
+                        weui.alert(data.msg);
+                    }
+                    $loading.hide();
+                }, 'json');
+
+                return this;
+            },
+
+            /**
+             * 设置当前面板状态
+             * @return {[type]}        [description]
+             */
+            load: function() {
+                $('.panel').each(function() {
+                    var $elem = $(this).find('.panel-body'),
+                            h = $elem.children('div').height();
+                    $elem.height($(this).hasClass('open') ? h : 0);
+                });
+
+                return this;
+            },
+
+            /**
+             * 获取当前认证状态
+             * @return {[type]}        [description]
+             */
+            type: function() {
+                var type = "",
+                    title = "",
+                    desc ="";
+
+                switch(Number(this.item.verify_status)) {
+                    case 0: type = 'warning'; title = '未认证'; desc = '您当前还没有进行认证，请进行认证'; break;
+                    case 1: type = 'success'; title = '已认证'; desc = '您的认证已通过'; break;
+                    case 2: type = 'info'; title = '认证中'; desc = '您的认证正在核审中'; break;
+                    case 3: type = 'error'; title = '补充资料'; desc = (this.item.reason || this.item.remark || '请补充认证资料'); break;
+					case 4: type = 'info'; title = '处理中'; desc = '您的认证正在处理中'; break;
+                }
+
+                return {
+                    type: type,
+                    title: title,
+                    desc: desc
+                };
+            },
+
+            /**
+             * 设置当前通知显示
+             * @return {[type]}        [description]
+             */
+            notice: function() {
+                var type = this.type();
+
+                $('#notice').removeClass('notice-warning notice-success notice-info notice-error').addClass('notice-' + type.type);
+                $('#notice-title').text(type.title);
+                $('#notice-desc').text(type.desc);
+
+                return this;
+            },
+
+            /**
+             * 设置是否禁用 input
+             * @return {[type]}        [description]
+             */
+            disabledInput: function() {
+                if (!this.disabled) {
+                    return this;
+                }
+
+                $('input').prop('disabled', true);
+                return this;
+            },
+
+            /**
+             * 设置当前表单值
+             * @return {[type]}        [description]
+             */
+            setValue: function() {
+                var _this = this;
+
+                // input value
+                $.each(this.item, function(key, val) {
+                    if (key != 'self_appid' && key != 'account_type') {
+                        $('input[name="'+ key +'"]').val(val);
+                    }
+                });
+
+                // 地址
+                $('#address').val(this.getCityName(
+                    __CITY__,
+                    [(this.item.gb_province_no || '110000'), (this.item.gb_city_no || '110100'), (this.item.gb_district_no || '110101')]
+                ));
+
+                // 行业分类
+                $('#category').val(this.getSelectName(
+                    data.category,
+                    _this.item.category
+                ));
+
+                // 商户类型
+                $('#type').val(this.getSelectName(
+                    data.type,
+                    _this.item.type
+                ));
+                // if (this.item.category_id) {
+                //     $('#category_id').val(this.getCategoryName(
+                //         __CATEGORY__,
+                //         [(this.item.parent_category_id || 1), (this.item.category_id || 5094)]
+                //     ));
+                // }
+
+                // 开始日期
+                $('#license_start_date').val(_this.item.license_start_date);
+                $('#license_end_date').val(_this.item.license_end_date == -1 ? '2099-12-30' : _this.item.license_end_date);
+
+                // 对公类型
+                $('input[name="account_type"]').prop('cheked', false);
+                $('#account_type_' + _this.item.account_type).prop('checked', true);
+
+                // 银行
+                $('#bank_id').val(this.getSelectName(
+                    _this.bankList,
+                    _this.item.bank_id
+                ));
+
+                // 支行
+                $('#bank_no').val(this.getSelectName(
+                    _this.bankListChild,
+                    _this.item.bank_no
+                ));
+
+                // appid
+                $('input[name="self_appid"]').prop('cheked', false);
+                $('#self_appid_' + _this.item.self_appid).prop('checked', true);
+                if (_this.item.self_appid == 1) {
+                    $('input[name="self_appid"]').parents('.panel-body').height('auto');
+                    $('.wx_appid').show();
+                    $('.wx_appid').find('.weui-label').addClass('required');
+                    $('.wx_appid').find('.weui-input').prop('required', true);
+                }
+
+                // 照片信息
+                $('#license_pic-img').attr('src', this.item.license_pic ? (this.item.domain + this.item.license_pic) : 'https://img1.vyicoo.cn/app/icon/extra_pic.png');
+                $('#id_front_pic-img').attr('src', this.item.id_front_pic ? (this.item.domain + this.item.id_front_pic) : 'https://img1.vyicoo.cn/app/icon/extra_pic.png');
+                $('#id_back_pic-img').attr('src', this.item.id_back_pic ? (this.item.domain + this.item.id_back_pic) : 'https://img1.vyicoo.cn/app/icon/extra_pic.png');
+                $('#bankcard_pic-img').attr('src', this.item.bankcard_pic ? (this.item.domain + this.item.bankcard_pic) : 'https://img1.vyicoo.cn/app/icon/extra_pic.png');
+                $('#shop_pic-img').attr('src', this.item.shop_pic ? (this.item.domain + this.item.shop_pic) : 'https://img1.vyicoo.cn/app/icon/extra_pic.png');
+                $('#extra_pic1-img').attr('src', this.item.extra_pic1 ? (this.item.domain + this.item.extra_pic1) : 'https://img1.vyicoo.cn/app/icon/extra_pic.png');
+                $('#extra_pic2-img').attr('src', this.item.extra_pic2 ? (this.item.domain + this.item.extra_pic2) : 'https://img1.vyicoo.cn/app/icon/extra_pic.png');
+
+                // button
+                if (this.disabled) {
+                    $('#submit').remove();
+                }
+
+                // 修改状态下不可改的字段
+                // if (this.item.verify_status == 3) {
+                //     $('input[name="realname"]').prop('disabled', true);
+                //     $('input[name="id_no"]').prop('disabled', true);
+                //     $('input[name="license_no"]').prop('disabled', true);
+                //     $('input[name="name"]').prop('disabled', true);
+                // }
+
+                return this;
+            },
+
+            /**
+             * 当前设置操作方法
+             * @return {[type]}        [description]
+             */
+            set: function() {
+
+                // notice
+                this.notice();
+
+                // disabled
+                this.disabledInput();
+
+                // set value
+                this.setValue();
+
+                return this;
+            },
+
+            /**
+             * 事件绑定
+             * @return {[type]}        [description]
+             */
+            events: function() {
+                var _this = this;
+
+                // 面板
+                $('.panel .panel-header').on('click', function() {
+                    var $elem = $(this).parent().find('.panel-body'),
+                        has = $(this).parent().hasClass('open'),
+                        h = $elem.children('div').height();
+
+                    $elem.height(has ? 0 : h);
+                    $(this).parent()[has ? 'removeClass' : 'addClass']('open');
+                });
+
+                // 开始时间
+				$('#license_start_date_wrap').on('click', function() {
+				    if (_this.disabled) {
+				        return false;
+                    }
+
+                    var $elem = $('#license_start_date'),
+                        start_date = _this.item.license_start_date && _this.item.license_start_date.replace(/-/g, '/') || null,
+                        now = start_date ? new Date(start_date) : new Date();
+
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.datePicker({
+                        start: 1960,
+                        end: 2099,
+                        defaultValue: [now.getFullYear(), (now.getMonth() + 1), now.getDate()],
+                        onConfirm: function(result){
+                            var timeText = (result[0].label + result[1].label + result[2].label),
+                                timeVal = (result[0].value + '/' + result[1].value + '/' + result[2]),
+                                date = format(new Date(timeVal), 'yyyy-MM-dd');
+
+                            $elem.val(timeText).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $elem.next().val(date);
+                        },
+                        id: 'license_start_date'
+                    });
+                });
+
+                // 结束时间
+                $('#license_end_date_wrap').on('click', function() {
+                    if (_this.disabled) {
+                        return false;
+                    }
+
+                    var $elem = $('#license_end_date'),
+                        end_date = _this.item.license_end_date && _this.item.license_end_date.replace(/-/g, '/') || null,
+                        now = end_date ? new Date(end_date) : new Date();
+
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.datePicker({
+                        start: 1960,
+                        end: 2099,
+                        defaultValue: [now.getFullYear(), (now.getMonth() + 1), now.getDate()],
+                        onConfirm: function(result){
+                            var timeText = (result[0].label + result[1].label + result[2].label),
+                                timeVal = (result[0].value + '/' + result[1].value + '/' + result[2]),
+                                date = format(new Date(timeVal), 'yyyy-MM-dd');
+
+                            $elem.val(timeText).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $elem.next().val(date);
+                        },
+                        id: 'license_end_date'
+                    });
+                });
+
+                // 永久
+                $('#set-end-date').on('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var $elem = $('#license_end_date');
+
+                    $elem.val('2099年12月30日').css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                    $elem.next().val('-1');
+                });
+
+
+                // 开户类型
+                $('input[name="account_type"]').on('change', function() {
+                    var val = $(this).val();
+                    $('#uploader-bankcard_pic .weui-label').text(val == 0 ? '银行卡正面' : '开户许可证')
+                });
+
+                // appid
+                $('input[name="self_appid"]').on('change', function() {
+                    var val = $(this).val();
+                    $(this).parents('.panel-body').height('auto');
+                    $('.wx_appid')[val == 2 ? 'hide' : 'show']();
+                    $('.wx_appid').find('.weui-label')[val == 2 ? 'removeClass' : 'addClass']('required');
+                    $('.wx_appid').find('.weui-input').prop('required', val == 2 ? false : true);
+                });
+
+
+                // 开户行
+                $('#bank_id_wrap').on('click', function() {
+                    if (_this.disabled) {
+                        return false;
+                    }
+
+                    if (!_this.bankList || !_this.bankList.length) {
+                        return false;
+                    }
+
+                    if (!$('input[name="account_city"]').val()) {
+                        weui.alert('请选择开户银行所在城市', {title: '提示'});
+                        return;
+                    }
+
+                    var $elem = $('#bank_id');
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.picker(_this.bankList, {
+                        defaultValue: [(_this.item.bank_id || _this.bankList[0].value)],
+                        onConfirm: function (result) {
+                            result = result[0];
+                            $elem.val(result.label).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $elem.next().val(result.value);
+                            _this.getBankChild();
+                        },
+                        id: 'bank_id'
+                    });
+                });
+
+                // 开户支行
+                $('#bank_no_wrap').on('click', function() {
+                    if (_this.disabled) {
+                        return false;
+                    }
+
+                    if (!_this.bankListChild || !_this.bankListChild.length) {
+                        return false;
+                    }
+
+                    var $elem = $('#bank_no');
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.picker(_this.bankListChild, {
+                        defaultValue: [(_this.item.bank_no || _this.bankListChild[0].value)],
+                        onConfirm: function (result) {
+                            result = result[0];
+                            $elem.val(result.label).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $elem.next().val(result.value);
+                        },
+                        id: 'bank_no'
+                    });
+                });
+
+                // 预留手机号同上
+                $('#set-account-mobile').on('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var val = $('input[name="mobile"]').val();
+                    if (val) {
+                        $('input[name="account_mobile"]').val(val);
+                    }
+                });
+
+                // 行业类别选择
+                $('#category_wrap').on('click', function() {
+                    if (_this.disabled) {
+                        return false;
+                    }
+
+                    var $elem = $('#category');
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.picker(data.category, {
+                        defaultValue: [_this.item.category || '103'],
+                        onConfirm: function (result) {
+                            result = result[0];
+                            $elem.val(result.label).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $elem.next().val(result.value);
+                        },
+                        id: 'categoryPicker'
+                    });
+                });
+
+                // 商户类型
+                $('#type_wrap').on('click', function() {
+                    if (_this.disabled) {
+                        return false;
+                    }
+
+                    var $elem = $('#type');
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.picker(data.type, {
+                        defaultValue: [_this.item.type || '1'],
+                        onConfirm: function (result) {
+                            result = result[0];
+                            $elem.val(result.label).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $elem.next().val(result.value);
+                        },
+                        id: 'typePicker'
+                    });
+                });
+
+                // 地址选择
+                $('#address_wrap').on('click', function() {
+                    if (_this.disabled) {
+                        return false;
+                    }
+
+                    var $elem = $('#address');
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.picker(data.city, {
+                        depth: 3,
+                        defaultValue: [(_this.item.gb_province_no || '110000'), (_this.item.gb_city_no || '110100'), (_this.item.gb_district_no || '110101')],
+                        onConfirm: function (result) {
+							var str = "";
+							$.each(result, function(index, val) {
+								str += val.label + '-';
+							});
+                            $elem.val(str.substr(0, str.length-1)).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $('input[name="gb_province_no"]').val(result[0].value);
+                            $('input[name="gb_city_no"]').val(result[1].value);
+                            $('input[name="gb_district_no"]').val(result[2] && result[2].value || '');
+                        },
+                        id: 'addressPicker'
+                    });
+                });
+
+                // 开户银行地址选择
+                $('#account_city_wrap').on('click', function() {
+                    if (_this.disabled) {
+                        return false;
+                    }
+
+                    var $elem = $('#account_city');
+                    $(this).parent().removeClass('weui-cell_warn');
+                    weui.picker(data.city, {
+                        depth: 2,
+                        defaultValue: ['110000', '110100'],
+                        onConfirm: function (result) {
+                            var str = "";
+
+                            result.pop();
+							$.each(result, function(index, val) {
+								str += val.label + '-';
+							});
+                            $elem.val(str.substr(0, str.length-1)).css({'-webkit-text-fill-color': '#1f2d3d', 'opacity': 1});
+                            $('input[name="account_city"]').val(result[1].value);
+                        },
+                        id: 'addressBankPicker'
+                    });
+                });
+
+
+                // 默认上传配置
+                var $loading,
+                    url = $.extend({}, _this.params, {act: 'upload', type: 'image'}),
+                    uploaderOptions = {
+                        url: '/v2.0/common/upload',
+                        compress: {
+                            width: 1600,
+                            height: 1600,
+                            quality: 0.8
+                        },
+                        onBeforeQueued: function(files) {
+                            if (_this.disabled) {
+                                weui.alert('您已提交过资料，无须重复上传');
+                                return false;
+                            }
+
+                            if(["image/jpg", "image/jpeg", "image/png", "image/gif"].indexOf(this.type) < 0){
+                                weui.alert('请当前选择的文件不合法，请上传正确的图片');
+                                return false; // 阻止文件添加
+                            }
+
+                            if(this.size > 5 * 1024 * 1024){
+                                weui.alert('请上传不超过5M的图片');
+                                return false;
+                            }
+
+                            if (files.length > 1) { // 防止一下子选择过多文件
+                                weui.alert('最多只能上传一张图片，请重新选择');
+                                return false;
+                            }
+
+                            return true;
+                        },
+                        onBeforeSend: function(data, headers) {
+                            $loading = weui.loading('图片上传中...');
+                            $.extend(headers, { token:  _this.params['token']})
+                            $('.panel-body').removeAttr('style');
+                            delete data.type;
+                        },
+                        onQueued: function () {
+                            return true;
+                        },
+                        onProgress: function() {
+                            return true;
+                        },
+                        onError: function () {
+                            $loading.hide();
+                            return true;
+                        }
+                    };
+
+                // 法人门头照
+                weui.uploader('#uploader-shop_pic', {
+                    url: uploaderOptions.url,
+                    onBeforeQueued: uploaderOptions.onBeforeQueued,
+                    onQueued: uploaderOptions.onQueued,
+                    onProgress: uploaderOptions.onProgress,
+                    onBeforeSend: uploaderOptions.onBeforeSend,
+                    onSuccess: function(ret) {
+                        $loading.hide();
+                        if (ret.status === 0) {
+                            $('#shop_pic-img').attr('src', this.url);
+                            $('input[name="shop_pic"]').val(ret.data.path);
+                        } else {
+                            weui.alert(ret.msg);
+                        }
+                        return true;
+                    },
+                    onError: uploaderOptions.onError
+                });
+
+                // 营业执照
+                weui.uploader('#uploader-license_pic', {
+                    url: uploaderOptions.url,
+                    onBeforeQueued: uploaderOptions.onBeforeQueued,
+                    onQueued: uploaderOptions.onQueued,
+                    onProgress: uploaderOptions.onProgress,
+                    onBeforeSend: uploaderOptions.onBeforeSend,
+                    onSuccess: function(ret) {
+                        $loading.hide();
+                        if (ret.status === 0) {
+                            $('#license_pic-img').attr('src', this.url);
+                            $('input[name="license_pic"]').val(ret.data.path);
+                        } else {
+                            weui.alert(ret.msg);
+                        }
+                        return true;
+                    },
+                    onError: uploaderOptions.onError
+                });
+
+                // 法人身份证正面
+                weui.uploader('#uploader-id_front_pic', {
+                    url: uploaderOptions.url,
+                    onBeforeQueued: uploaderOptions.onBeforeQueued,
+                    onQueued: uploaderOptions.onQueued,
+                    onProgress: uploaderOptions.onProgress,
+                    onBeforeSend: uploaderOptions.onBeforeSend,
+                    onSuccess: function(ret) {
+                        $loading.hide();
+                        if (ret.status === 0) {
+                            $('#id_front_pic-img').attr('src', this.url);
+                            $('input[name="id_front_pic"]').val(ret.data.path);
+                        } else {
+                            weui.alert(ret.msg);
+                        }
+                        return true;
+                    },
+                    onError: uploaderOptions.onError
+                });
+
+                // 法人身份证反面
+                weui.uploader('#uploader-id_back_pic', {
+                    url: uploaderOptions.url,
+                    onBeforeQueued: uploaderOptions.onBeforeQueued,
+                    onQueued: uploaderOptions.onQueued,
+                    onProgress: uploaderOptions.onProgress,
+                    onBeforeSend: uploaderOptions.onBeforeSend,
+                    onSuccess: function(ret) {
+                        $loading.hide();
+                        if (ret.status === 0) {
+                            $('#id_back_pic-img').attr('src', this.url);
+                            $('input[name="id_back_pic"]').val(ret.data.path);
+                        } else {
+                            weui.alert(ret.msg);
+                        }
+                        return true;
+                    },
+                    onError: uploaderOptions.onError
+                });
+
+                // 银行卡
+                weui.uploader('#uploader-bankcard_pic', {
+                    url: uploaderOptions.url,
+                    onBeforeQueued: uploaderOptions.onBeforeQueued,
+                    onQueued: uploaderOptions.onQueued,
+                    onProgress: uploaderOptions.onProgress,
+                    onBeforeSend: uploaderOptions.onBeforeSend,
+                    onSuccess: function(ret) {
+                        $loading.hide();
+                        if (ret.status === 0) {
+                            $('#bankcard_pic-img').attr('src', this.url);
+                            $('input[name="bankcard_pic"]').val(ret.data.path);
+                        } else {
+                            weui.alert(ret.msg);
+                        }
+                        return true;
+                    },
+                    onError: uploaderOptions.onError
+                });
+
+                // 经营场所内照片
+                weui.uploader('#uploader-extra_pic1', {
+                    url: uploaderOptions.url,
+                    onBeforeQueued: uploaderOptions.onBeforeQueued,
+                    onQueued: uploaderOptions.onQueued,
+                    onProgress: uploaderOptions.onProgress,
+                    onBeforeSend: uploaderOptions.onBeforeSend,
+                    onSuccess: function(ret) {
+                        $loading.hide();
+                        if (ret.status === 0) {
+                            $('#extra_pic1-img').attr('src', this.url);
+                            $('input[name="extra_pic1"]').val(ret.data.path);
+                        } else {
+                            weui.alert(ret.msg);
+                        }
+                        return true;
+                    },
+                    onError: uploaderOptions.onError
+                });
+
+                // 收银台招牌照片
+                weui.uploader('#uploader-extra_pic2', {
+                    url: uploaderOptions.url,
+                    onBeforeQueued: uploaderOptions.onBeforeQueued,
+                    onQueued: uploaderOptions.onQueued,
+                    onProgress: uploaderOptions.onProgress,
+                    onBeforeSend: uploaderOptions.onBeforeSend,
+                    onSuccess: function(ret) {
+                        $loading.hide();
+                        if (ret.status === 0) {
+                            $('#extra_pic2-img').attr('src', this.url);
+                            $('input[name="extra_pic2"]').val(ret.data.path);
+                        } else {
+                            weui.alert(ret.msg);
+                        }
+                        return true;
+                    },
+                    onError: uploaderOptions.onError
+                });
+
+
+                // 表单提交
+                weui.form.checkIfBlur('#form', this.regexp);
+                $('#submit').on('click', function() {
+                    weui.form.validate('#form', function (error) {
+                        if (!error) {
+                            var loading,
+                                $dialog,
+                                form = $('form').serializeArray(),
+                                data = {};
+
+                            $.each(form, function(index, value) {
+                                data[value.name] = value.value;
+                            });
+
+                            if (!data.shop_pic || !data.license_pic || !data.id_front_pic || !data.id_back_pic || !data.bankcard_pic || !data.extra_pic1 || !data.extra_pic2) {
+                                weui.alert('请检查您的照片是否已全部上传');
+                                return false;
+                            }
+
+                            if (_this.disabled) {
+                                return false;
+                            }
+
+                            var post = function() {
+                                loading = weui.loading('提交中...');
+                                var tmp = $.extend({}, data, _this.params);
+                                tmp['act'] = 'add';
+                                $.post('/v2.0/mch/auth/verify', tmp, function(data) {
+                                    loading.hide();
+                                    if (data.status === 0) {
+                                        weui.toast('提交成功', {
+                                            duration: 3000,
+                                            callback: function(){
+                                                window.location.reload();
+                                            }
+                                        });
+                                    } else {
+                                        weui.alert(data.msg || '提交失败', {title: '温馨提示'});
+                                        return;
+                                    }
+                                }, 'json');
+                            }
+
+                            // 修改状态不操作
+                            if (_this.item.verify_status == 3) {
+                                post();
+                                return;
+                            }
+
+                            var dialogContent = '',
+                                tpl = ['<p class="tips">以下信息一经提交将无法修改，请仔细核对信息的准确性；</p>',
+                                '<p><span>姓名：</span>{realname}</p>',
+                                '<p><span>身份证：</span>{id_no}</p>',
+                                '<p><span>营业执照号：</span>{license_no}</p>',
+                                '<p><span>注册全称：</span>{name}</p>'].join("");
+
+
+                            dialogContent = tpl.replace(/{realname}/g, $('input[name="realname"]').val())
+                                               .replace(/{id_no}/g, $('input[name="id_no"]').val())
+                                               .replace(/{license_no}/g, $('input[name="license_no"]').val())
+                                               .replace(/{name}/g, $('input[name="name"]').val())
+
+                           $dialog = weui.dialog({
+                                title: '提示',
+                                content: dialogContent,
+                                className: 'dialog-notice',
+                                buttons: [{
+                                    label: '取消',
+                                    type: 'default'
+                                }, {
+                                    label: '确认提交',
+                                    type: 'primary',
+                                    onClick: function() {
+                            			$dialog && $dialog.hide(post);
+                                    }
+                                }]
+                            });
+
+                        }
+                    }, _this.regexp);
+                });
+
+                return this;
+            },
+
+            /**
+             * 初始化
+             * @return {[type]}        [description]
+             */
+            init: function() {
+                var _this = this;
+
+                this.bankList = [];
+                this.bankListChild = [];
+                this.params = this.query();
+                this.item = {};
+                this.disabled = false;
+
+                this.regexp = {
+                    regexp: {
+                        IDNUM: /(?:^\d{15}$)|(?:^\d{18}$)|^\d{17}[\dXx]$/,
+                        MAIL: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
+                        MOBILE: /^1[0-9]{10}$/
+                    }
+                };
+
+                this.getBank(function() {
+                    this.get(function(data) {
+                        this.disabled = (data.verify_status == 1 || data.verify_status == 2 || data.verify_status == 4) ? true : false;
+                    	if (data.verify_status == 0) {
+                    		this.load().events();
+                    	} else {
+                            // 认证中，已认证 隐藏开户支行选择
+                            if (this.disabled) {
+                                $('#account_city_wrap').parent().hide();
+                            }
+                    		// 修正支行显示
+                    		$('input[name="bank_id"]').val(data.bank_id);
+                            $('input[name="gb_city_no"]').val(data.gb_city_no);
+                            $('input[name="account_city"]').val(data.account_city);
+
+                            var callback = function() {
+                                if (data.verify_status != 0) {
+                                    this.item = data;
+                                    this.set();
+                                }
+                                this.load().events();
+                            };
+
+                            if (data.bank_id && data.account_city) {
+                                this.getBankChild(function() {
+                                    callback.apply(this);
+                                });
+                            } else {
+                                callback.apply(this);
+                            }
+                    	}
+                    });
+                });
+
+            }
+        };
+        main.init();
+	}(Zepto));
+	</script>
+</body>
+</html>
