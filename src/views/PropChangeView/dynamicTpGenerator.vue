@@ -10,7 +10,7 @@
 
 <script lang='ts'>
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-const path = '@/Widget/base/Carousel/editProps.vue';
+
 @Component
 export default class extends Vue {
     @Prop({default: ""}) tpName!: string;

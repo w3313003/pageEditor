@@ -18,7 +18,7 @@ export default {
                 enableCustomTemplate: true
             },
             {
-                name: "辅助空白",
+                name: "分隔符",
                 component: "z-WhiteSpace",
                 container: false,
                 type: "base",

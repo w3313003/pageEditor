@@ -8,7 +8,8 @@ module.exports = {
   rules: {
     "no-console": prod ? "error" : "off",
     "no-debugger": prod ? "error" : "off",
-    "no-parsing-error": "off"
+    "no-parsing-error": "off",
+    "vue/no-parsing-error": "off"
   },
   parserOptions: {
     parser: "@typescript-eslint/parser"

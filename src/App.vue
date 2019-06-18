@@ -1,5 +1,5 @@
 <template>
-    <Layout>
+    <Layout class="layout">
         <Header class="header">
             <Button @click="clear" type='error'>
                 清空
@@ -9,7 +9,7 @@
             </Button>
            <Button @click="showPageModal = true" type='success'>
                 添加新页面
-            </Button>
+           </Button>
             <Select prefix="ios-home" style="width:200px"
                 placeholder='请选择编辑页面'
                 @on-change='pageChange'
@@ -56,6 +56,11 @@
                 </Col>
             </Row>
         </Content>
+        <Footer class="layout-footer-center">
+            <Divider>
+                via ZJ
+            </Divider>
+        </Footer>
         <Modal
             v-model="showModal"
             title="页面配置"
@@ -82,8 +87,8 @@
             v-model='showPageEditorModal'
             title="页面编辑"
             >
-            <Tag type="dot" 
-                v-for='(item, i) of pageData' 
+            <Tag type="dot"
+                v-for='(item, i) of pageData'
                 :key="i"
                 :closable='!(item.name === "主页" && item.path === "/")'
                 :color='item.name === currentPage.name ? "primary" : ""'
@@ -176,6 +181,8 @@ button
     margin-right 10px
 .ivu-layout {
     background-color: #eceef3!important;
+    position relative
+    min-height 100vh
 }
 .header
     text-align center
@@ -186,5 +193,13 @@ button
     padding: 20px 0
     /* background-color: #eceef3; */
 }
+.layout-footer-center{
+    text-align: center;
+    background-color: #eceef3!important;
+    position absolute
+    width 100%
+    bottom 0
+}
+
 </style>
 

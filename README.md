@@ -1,5 +1,3 @@
-# drap
-
 ## Project setup
 ```
 yarn install
