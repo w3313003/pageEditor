@@ -35,7 +35,7 @@
                     </template>
                 </component>
             </Wrap>
-        </div>
+        </div>  
     </draggable>
 </template>
 
@@ -80,7 +80,8 @@ export default class extends Vue {
     drag = false;
     selectItem = {};
     disable = false;
-    
+    children!: [];
+
     @Mutation SET_ACTIVECOMP!: Function;
     @Mutation STORAGE_PAGE_DATA!: Function;
     select(comp: WidgetComp) {
@@ -118,7 +119,7 @@ export default class extends Vue {
 
 <style lang="stylus" scoped>
 .drag-wrap
-    min-height 50px
+    min-height 20px
 .shadow
     position absolute 
     left 50%

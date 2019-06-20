@@ -16,7 +16,7 @@ export default class extends Vue {
     @Prop({default: ""}) tpName!: string;
     @Prop({default: ''}) editProps!: object;
     // 透传change处理函数
-    @Prop({default: () => {}}) change!: Function;
+    @Prop({default: () => null}) change!: Function;
     @Watch('tpName')
     onTpNameChange(val: string) {
         console.log(`组件编辑模板改变为 @/Widget/${val}.vue`);

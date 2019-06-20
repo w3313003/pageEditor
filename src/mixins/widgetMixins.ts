@@ -10,7 +10,7 @@ export default class WidgetMixin extends Vue {
         const ret: temp = {},
             { props }: temp = this.$options;
         if (!props) return {};
-        Object.keys((this.$options.props as object)).forEach(key => {
+        Object.keys(props).forEach(key => {
             ret[key] = props[key]['default'];
         });
         return ret;

@@ -26,6 +26,5 @@ export default class extends WidgetMixin {
 .wrap
     position relative
     padding 7px 5px
-    min-height 60px
     overflow hidden
 </style>

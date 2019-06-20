@@ -19,8 +19,8 @@
 
 <script lang='ts'>
 import {  Component, Prop } from 'vue-property-decorator';
-import PropEditorMixin from "../../mixins/PropEditorMixin";
-import '../../'
+import PropEditorMixin from "@/mixins/PropEditorMixin";
+
 @Component
 export default class extends PropEditorMixin {
     @Prop({default: '10'}) height!: string;

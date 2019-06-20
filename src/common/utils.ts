@@ -6,7 +6,13 @@ export function vueX2stoage(key: string, value: object | string | boolean): void
 
 export function parseStoage(key: string) {
     let data = sessionStorage.getItem(key);
-    return JSON.parse((data as string));
+    try {
+        return JSON.parse((data as string));
+    } catch(e) {
+        console.warn(`sessionStorage中不存在${key}`);
+        return void 0;
+    }
+    
 }
 /**
  * @export

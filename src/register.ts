@@ -1,5 +1,4 @@
 import Vue from 'vue';
-
 import List from '@/Widget/base/List/index.vue';
 import Carousel from '@/Widget/base/Carousel/index.vue';
 import WhiteSpace from '@/Widget/base/WhiteSpace/index.vue';
