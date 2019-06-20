@@ -13,9 +13,9 @@
 
 **控件描述：**
 | 参数 | 描述 |
-| --- | --- |
-|name(String)| 控件名称 |
-| component(String) | 控件的compName |
-| container(Boolean)| 是否为容器控件 |
+| :---: | :---: |
+| name(String) | 控件名称 |
+| component(String) | 控件的compName(z-name) |
+| container(Boolean) | 是否为容器控件 |
 | type(String) | 控件种类 |
 | enableCustomTemplate(Boolean) | 是否启用自定义编辑模板 |
