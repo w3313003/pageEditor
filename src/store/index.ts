@@ -114,8 +114,12 @@ const mutations = {
 		vueX2stoage('componentList', state.componentList);
 	},
 
+	// 页面切换
 	[CONST.SET_ACTIVEPAGEINDEX](state: state, index: number) {
 		state.activePageIndex = index;
+		// 切换页面时初始化激活组件, 否则在激活组件为容器时会导致错误添加
+		state.activeComp = {} as WidgetComp;
+		vueX2stoage('activePageIndex', {});
 		vueX2stoage('activePageIndex', '' + index);
 	},
 
@@ -178,6 +182,6 @@ export default new Vuex.Store({
 	mutations,
 	actions,
 	getters,
-	plugins: debug ? [ createLogger() ] : []
+	// plugins: debug ? [ createLogger() ] : []
 });
 
