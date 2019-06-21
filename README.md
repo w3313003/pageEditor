@@ -12,6 +12,7 @@
 * * *
 
 **控件描述：**
+<<<<<<< HEAD
  参数 | 描述 |
  :---: | :---: |
 name(String) | 控件名称 |
@@ -20,3 +21,13 @@ container(Boolean) | 是否为容器控件 |
 type(String) | 控件种类 |
 enableCustomTemplate(Boolean) | 是否启用自定义编辑模板 |
 
+=======
+
+| 参数 | 描述 |
+| :--------: | :--------:|
+| name | 控件名称 |
+| component | 控件的compName(z-name) |
+| container | 是否为容器控件 |
+| type | 控件种类 |
+| enableCustomTemplate | 是否启用自定义编辑模板 |
+>>>>>>> 34dab030f5eba21b43cb00ccf3d5547ab2129496
