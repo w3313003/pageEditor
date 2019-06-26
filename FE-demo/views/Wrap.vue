@@ -39,7 +39,7 @@ export default {
         _init() {
             const asyncRegisterList = [];
             this.componentList.forEach(comp => {
-                asyncRegisterList.push(() => import(`./${comp.component}.vue`).then(load => {
+                asyncRegisterList.push(() => import(`../components/${comp.component}.vue`).then(load => {
                         const components = this.$options.components,
                             _comp = load.default;
                         if (!Reflect.has(components, _comp.name)) {
