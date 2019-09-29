@@ -124,7 +124,6 @@ const mutations = {
 	},
 
 	[CONST.ADD_PAGE](state: state, page: Page) {
-		console.log(page);
 		state.pageData.push(page);
 		vueX2stoage('pageData', state.pageData);
 	},
@@ -182,6 +181,6 @@ export default new Vuex.Store({
 	mutations,
 	actions,
 	getters,
-	// plugins: debug ? [ createLogger() ] : []
+	plugins: debug ? [ createLogger() ] : []
 });
 

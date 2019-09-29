@@ -10,3 +10,15 @@ const compList: VueComp[] = [List, Carousel, WhiteSpace, Area];
 compList.forEach(comp => {
     Vue.component((comp.compName as any), comp)
 })
+
+
+interface O {
+    name: String,
+    age: Number,
+    lan?: String,
+    readonly x: String
+}
+
+type X = {
+    readonly [T in keyof O]: O[T]
+}

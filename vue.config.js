@@ -1,5 +1,8 @@
+
+const publicPath = process.env.NODE_ENV === 'production' ? '/web/drap' : ''
+
 module.exports = {
-    publicPath: "/drap",
+    publicPath,
     productionSourceMap: false,
     configureWebpack: {
         resolve: {
