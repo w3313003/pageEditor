@@ -1,4 +1,5 @@
->本项目使用class-style Vue components。语法参考:[vue-class-component](https://github.com/vuejs/vue-class-component)，[vue-property-decorator](https://github.com/kaorun343/vue-property-decorator)
+>本项目使用class-style Vue components。语法参考:[vue-class-component](https://github.com/vuejs/vue-class-component)，[vue-property-decorator](https://github.com/kaorun343/vue-property-decorator).
+根据JSON数据渲染组件实现可参考FE-demo.
 * * *
 
 #### Widget配置方法
