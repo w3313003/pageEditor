@@ -119,7 +119,6 @@ export default class extends Vue {
             Object.keys(this.$refs).forEach(key => {
             if (key.match(/^comp\-/)) {
                 const id = key.replace("comp-", "");
-                console.log(id);
                 const comp = (this.list as WidgetComp[]).find(some => some.id === id) || {};
                 const hasProps = Reflect.has(comp, 'props');
                 if (!hasProps) {
