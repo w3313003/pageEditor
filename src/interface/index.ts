@@ -1,7 +1,7 @@
 import { VueConstructor } from 'vue';
 import { Vue } from 'vue/types/vue';
 
-export interface WidgetComp {
+export interface WidgetComp extends Object {
     name: string;
     component: string;
     container?: boolean;

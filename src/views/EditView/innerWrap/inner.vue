@@ -91,8 +91,8 @@ export default class extends Vue {
         const hasProps = Reflect.has(comp, 'props');
         if(comp.id === this.activeComp.id) return;
         const vueComp = (this.$refs[`comp-${comp.id}`] as EditComp[])[0];
-        const props = vueComp.getConfig();
         if(!hasProps) {
+            const props = vueComp.getConfig();
             this.$set(comp, 'props', props)
         }
         this.SET_ACTIVECOMP(comp);
@@ -112,6 +112,25 @@ export default class extends Vue {
     onEndHandler() {
         this.drag = false;
         this.disable = false;
+    }
+    checkProps() {
+        this.$nextTick(() => {
+            console.log(this.$refs);
+            Object.keys(this.$refs).forEach(key => {
+            if (key.match(/^comp\-/)) {
+                const id = key.replace("comp-", "");
+                console.log(id);
+                const comp = (this.list as WidgetComp[]).find(some => some.id === id) || {};
+                const hasProps = Reflect.has(comp, 'props');
+                if (!hasProps) {
+                    const vueComp = (this.$refs[key] as EditComp[])[0];
+                    const props = vueComp.getConfig();
+                    this.$set(comp, 'props', props)
+                }
+            }
+        })
+        })
+        
     }
 }
 

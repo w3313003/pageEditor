@@ -3,6 +3,7 @@
         <img class="shell top" src="https://img.alicdn.com/tfs/TB1klxPA7yWBuNjy0FpXXassXXa-320-40.png" alt="">
         <div class="main">
             <Inner 
+                ref="inner"
                 :list = 'List'
             />
         </div>
@@ -32,6 +33,7 @@ export default {
         List :{
             deep: true,
             handler(val) {
+                this.$refs.inner.checkProps();
                 this.$store.commit('STORAGE_PAGE_DATA')
             }
         }

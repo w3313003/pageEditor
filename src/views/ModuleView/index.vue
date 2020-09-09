@@ -62,7 +62,6 @@ export default class extends Vue {
         if (widget.container && !Reflect.has(widget, "children")) {
             widget.children = [];
         }
-        // this.addComp(widget);
         this.PUSH_PAGE_COMP(widget);
     }
 }

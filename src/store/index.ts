@@ -150,7 +150,7 @@ const mutations = {
 		vueX2stoage('pageData', state.pageData);
 	},
 
-	[CONST.PUSH_PAGE_COMP](state: state, comp: WidgetComp) {
+    [CONST.PUSH_PAGE_COMP](state: state, comp: WidgetComp) {
 		const componentList = state.pageData[state.activePageIndex].componentList;
 		if (state.activeComp.id && state.activeComp.parentId) {
 			const parent = getCompById(componentList, state.activeComp.parentId);
